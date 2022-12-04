@@ -8,6 +8,7 @@
 <h1>E-commerce Web Application</h1>
 <h2 th:text="'Welcome '+${session.customer.name}+'!!'"></h2>
 <h2>List of Products</h2>
+	
 <table border="1">
 	<!-- tr: Table Row -->
 	<tr>
@@ -16,13 +17,21 @@
 		<th>Name</th>
 		<th>Price</th>
 		<th>Stock</th>
+		<th>Buy</th>
 	</tr>
-	<tr th:each="item : ${product}">
+	<tr th:each="product : ${products}">
 	<!-- table data -->
+	
 		<td th:text="${product.productId}"></td>
 		<td th:text="${product.productName}"></td>
 		<td th:text="${product.cost}"></td>
 		<td th:text="${product.stock}"></td>
+		<td>
+			<form action="./product" method="get">
+				<input type="hidden" name="productId" th:value="${product.productId}">
+				<input type="submit" value="Buy">	
+			</form>
+		</td>
 	</tr>
 </table>
 </body>

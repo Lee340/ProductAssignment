@@ -1,5 +1,7 @@
 package com.boram.controller;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boram.entity.Customer;
+import com.boram.entity.Product;
 import com.boram.model.service.CustomerService;
 
 @Controller
@@ -29,6 +32,8 @@ public class CustomerController {
 	
 		if(customer!=null) {
 			session.setAttribute("customer", customer);
+			Collection<Product> products = customerService.getAllProducts();
+			modelAndView.addObject("products", products);
 			modelAndView.setViewName("ProductPage");
 		} else {
 			modelAndView.addObject("message", "Login Failed, Please try again");
