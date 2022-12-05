@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.boram.entity.Customer;
 import com.boram.entity.Product;
+import com.boram.entity.Receipt;
 import com.boram.model.service.CustomerService;
 
 @Controller
@@ -42,4 +43,34 @@ public class CustomerController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping("/product")
+	public ModelAndView product(@RequestParam("productId") int productId, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView("BuyPage");
+		Product product = customerService.findProductById(productId);
+		
+		modelAndView.addObject("product", product);
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping("/buy")
+	public ModelAndView buy(@RequestParam("productId") int productId, @RequestParam("amount") int amount, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView("Output");
+
+		Customer customer = (Customer)session.getAttribute("customer");
+		Receipt receipt = customerService.purchase(productId, amount, customer);
+		
+		if (receipt != null) {
+			modelAndView.addObject("message", "All good");
+			modelAndView.addObject("hasReceipt", true);
+			modelAndView.addObject("receipt", receipt);
+		} else {
+			modelAndView.addObject("hasReceipt", false);
+			modelAndView.addObject("message", "Not enough stock");
+		}
+		
+		return modelAndView;
+	}
+	
 }

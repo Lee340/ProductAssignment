@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>E-commerce Web Application</h1>
+<h2 th:text="'Welcome '+${session.customer.name}+'!!'"></h2>
+<h2>Buy</h2>
+	
+	
+<form action="./buy" method="get">
+	Product Name:<h3 th:text="${product.productName}"></h3>
+	Product Price:<h3 th:text="${product.cost}"></h3>
+	Product Stock:<h3 th:text="${product.stock}"></h3>
+	How many product:<input name="amount" type="number" />
+	<input type="hidden" name="productId" th:value="${product.productId}">
+	<input type="submit" value="Buy">
+</form>
+
+</body>
+</html>
